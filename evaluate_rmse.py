@@ -21,7 +21,6 @@ def evaluate_rmse(generator, test_loader, noise_dim):
         j = 0
         for simulated_map, measured_map in tqdm(test_loader):
             j += 1
-            print(f"j: {j}")
             simulated_map = simulated_map.to(device)
             measured_map = measured_map.to(device)
             batch_size = simulated_map.size(0)
@@ -47,7 +46,7 @@ def evaluate_rmse(generator, test_loader, noise_dim):
                 total_rmse_generated += rmse_generated.item()
                 total_rmse_simulated += rmse_simulated.item()
                 num_samples += 1
-            if j > 5: break
+            if j > 10: break
 
     avg_rmse_generated = total_rmse_generated / num_samples
     avg_rmse_simulated = total_rmse_simulated / num_samples
