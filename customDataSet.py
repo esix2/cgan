@@ -1,5 +1,8 @@
 import os
+import torch
 from torch.utils.data import Dataset 
+from torch.utils.data import random_split, DataLoader
+from torchvision import transforms
 from PIL import Image
 
 class CustomDataset(Dataset):
@@ -22,4 +25,31 @@ class CustomDataset(Dataset):
             simulated_map = self.transform(simulated_map)
             measured_map = self.transform(measured_map)
         return simulated_map, measured_map
+
+def get_data_loaders(dpm_dir, irt_dir, batch_size, test_split=0.2, seed=42):
+    transform = transforms.Compose([
+        transforms.Grayscale(),
+        transforms.ToTensor(),
+        transforms.Normalize((0.5,), (0.5,))  # Normalize to [-1, 1]
+    ])
+    
+    dataset = CustomDataset(dpm_dir, irt_dir, transform=transform)
+    
+    # Determine the size of training and test datasets
+    dataset_size = len(dataset)
+    test_size = int(test_split * dataset_size)
+    train_size = dataset_size - test_size
+    
+    # Set the random seed for reproducibility
+    torch.manual_seed(seed)
+    
+    # Split the dataset into training and test sets
+    train_dataset, test_dataset = random_split(dataset, [train_size, test_size])
+    
+    # Create data loaders
+    train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
+    test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
+    
+    return train_loader, test_loader
+
 
