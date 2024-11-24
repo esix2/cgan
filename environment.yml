@@ -1,0 +1,22 @@
+name: ml
+channels:
+  - anaconda
+  - conda-forge
+  - defaults
+dependencies:
+  - jupyterlab
+  - jupyterlab_vim
+  - matplotlib
+  - numpy==1.26.4
+  - opencv
+  - python=3.12
+  - pytorch
+  - pywavelets
+  - scikit-learn
+  - scikit-image
+  - scipy
+  - tensorboard
+  - tifffile
+  - torchvision
+  - tqdm
+  

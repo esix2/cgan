@@ -79,8 +79,9 @@ def main():
 
 # Create dataset instance
 
-    dataset_dpm_path = 'dataset/DPM/'
-    dataset_irt_path = 'dataset/IRT2/'
+    HOME = os.environ["HOME"]
+    dataset_dpm_path = f"{HOME}/data/raytracing-dataset/DPM/"
+    dataset_irt_path = f"{HOME}/data/raytracing-dataset/IRT2/"
 
 
 # Create data loader
